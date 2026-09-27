@@ -117,14 +117,6 @@ The final cleaned dataset contains **5,628 customers** after the documented clea
 
 > These are project-level results calculated from the repository dataset and its documented cleaning/transformation workflow. They are not current industry statistics.
 
-## 📸 SQL Analysis Evidence
-
-The following screenshots show executed MySQL results for the project's core churn KPIs, customer metrics, and complaint analysis.
-
-![SQL Analysis Evidence](images/sql-analysis-evidence.png)
-
-> The complete 30-query analysis remains available in `analysis/Business_Analysis_Queries.sql`. These screenshots are provided as visual evidence of the executed analysis and are not intended to document every query individually.
-
 ## 🔎 Key Analytical Areas
 
 ### Customer Churn
