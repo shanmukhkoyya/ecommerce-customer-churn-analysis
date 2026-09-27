@@ -5906,7 +5906,8 @@ SET DistanceCategory =
         WHEN WarehouseToHome <= 10 THEN 'Close Distance'
         WHEN WarehouseToHome <= 15 THEN 'Moderate Distance'
         ELSE 'Far Distance'
-    END;
+    END
+WHERE CustomerID > 0;
     
 SELECT DistanceCategory,
        ChurnStatus,
