@@ -63,7 +63,7 @@ It also renames inconsistent source columns and removes the original `Churn` and
 
 ### 4. Exploratory & Business Analysis
 
-The SQL script answers **17 business questions** covering:
+The project includes business questions covering:
 
 - Churn
 - Tenure
@@ -77,6 +77,10 @@ The SQL script answers **17 business questions** covering:
 - Customer satisfaction
 - Warehouse-to-home distance
 - Customer orders
+
+For easier recruiter review, the key business-analysis queries are also available separately in:
+
+👉 [Business Analysis Queries](analysis/Business_Analysis_Queries.sql)
 
 ### 5. Customer Returns Analysis
 
@@ -183,7 +187,7 @@ Examples of questions answered in the SQL analysis include:
 9. How does warehouse distance relate to churn status?
 10. Which customers meet defined behavioral criteria?
 
-The complete script contains the full set of project questions and queries.
+The complete original script contains the dataset, cleaning steps, transformations, and analysis workflow.
 
 ## 📁 Repository Structure
 
@@ -191,18 +195,39 @@ The complete script contains the full set of project questions and queries.
 ecommerce-customer-churn-analysis/
 │
 ├── README.md
-└── Ecommerce_Customer_Churn_Analysis.sql
+├── Ecommerce_Customer_Churn_Analysis.sql
+│
+└── analysis/
+    └── Business_Analysis_Queries.sql
 ```
 
+### File Guide
+
+| File | Purpose |
+|---|---|
+| `Ecommerce_Customer_Churn_Analysis.sql` | Complete dataset, database setup, cleaning, transformation, and original analysis workflow |
+| `analysis/Business_Analysis_Queries.sql` | Clean, recruiter-friendly collection of key business-analysis queries |
+
 ## ▶️ How to Run
+
+### Step 1 — Run the Complete Project
 
 1. Install **MySQL** and open **MySQL Workbench**.
 2. Open `Ecommerce_Customer_Churn_Analysis.sql`.
 3. Run the script from the beginning so the database and tables are created in the correct order.
 4. Review the cleaning and transformation queries.
-5. Execute the analytical queries to reproduce the analysis.
 
-> **Note:** The SQL script contains the project dataset and analysis workflow, so the project can be reproduced from the repository without requiring a separate dataset file.
+### Step 2 — Run the Business Analysis Queries
+
+After the original script has completed successfully:
+
+1. Open `analysis/Business_Analysis_Queries.sql`.
+2. Run the queries individually or as required.
+3. Review the results for the corresponding business questions.
+
+> **Important:** The separate business-analysis file depends on the cleaned/transformed tables created by the original project SQL script.
+
+> **Note:** The original SQL script contains the project dataset and analysis workflow, so the project can be reproduced from the repository without requiring a separate dataset file.
 
 ## 💼 Business Value
 
@@ -223,6 +248,7 @@ It focuses on practical analyst skills such as:
 - The analysis is based on the dataset included in the SQL script.
 - Findings represent patterns in this project dataset and should not be treated as current e-commerce industry statistics.
 - The project focuses on SQL-based analysis rather than predictive machine-learning churn modeling.
+- The separate business-analysis file does not contain the raw dataset; it is designed to be run after the original project script.
 
 ## 🚀 Future Enhancements
 
