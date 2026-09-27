@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<rect width="1200" height="720" fill="#f7f8fa"/>
+<rect x="40" y="35" width="1120" height="90" rx="16" fill="#17202a"/>
+<text x="75" y="75" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#ffffff">E-Commerce Customer Churn Analysis</text>
+<text x="75" y="105" font-family="Arial,sans-serif" font-size="17" fill="#d9e1e8">MySQL Business Analysis — Executed Query Results</text>
+
+<g font-family="Arial,sans-serif">
+<rect x="55" y="155" width="255" height="120" rx="14" fill="#ffffff" stroke="#d8dee4"/>
+<text x="80" y="190" font-size="16" fill="#667085">TOTAL CUSTOMERS</text>
+<text x="80" y="235" font-size="34" font-weight="700" fill="#17202a">5,628</text>
+
+<rect x="330" y="155" width="255" height="120" rx="14" fill="#ffffff" stroke="#d8dee4"/>
+<text x="355" y="190" font-size="16" fill="#667085">CHURNED CUSTOMERS</text>
+<text x="355" y="235" font-size="34" font-weight="700" fill="#17202a">948</text>
+
+<rect x="605" y="155" width="255" height="120" rx="14" fill="#ffffff" stroke="#d8dee4"/>
+<text x="630" y="190" font-size="16" fill="#667085">OVERALL CHURN RATE</text>
+<text x="630" y="235" font-size="34" font-weight="700" fill="#17202a">16.84%</text>
+
+<rect x="880" y="155" width="265" height="120" rx="14" fill="#ffffff" stroke="#d8dee4"/>
+<text x="905" y="190" font-size="16" fill="#667085">CHURNED + COMPLAINED</text>
+<text x="905" y="235" font-size="34" font-weight="700" fill="#17202a">53.59%</text>
+
+<rect x="55" y="310" width="1090" height="345" rx="16" fill="#ffffff" stroke="#d8dee4"/>
+<text x="85" y="350" font-size="22" font-weight="700" fill="#17202a">Customer Metrics by Churn Status</text>
+<line x1="85" y1="375" x2="1115" y2="375" stroke="#d8dee4"/>
+<text x="100" y="410" font-size="16" font-weight="700" fill="#667085">METRIC</text>
+<text x="500" y="410" font-size="16" font-weight="700" fill="#667085">ACTIVE</text>
+<text x="780" y="410" font-size="16" font-weight="700" fill="#667085">CHURNED</text>
+<line x1="85" y1="430" x2="1115" y2="430" stroke="#e5e7eb"/>
+<text x="100" y="470" font-size="18" fill="#17202a">Average Tenure</text><text x="500" y="470" font-size="18" fill="#17202a">11.09</text><text x="780" y="470" font-size="18" fill="#17202a">3.18</text>
+<line x1="85" y1="490" x2="1115" y2="490" stroke="#eef0f2"/>
+<text x="100" y="530" font-size="18" fill="#17202a">Average Order Count</text><text x="500" y="530" font-size="18" fill="#17202a">2.99</text><text x="780" y="530" font-size="18" fill="#17202a">2.81</text>
+<line x1="85" y1="550" x2="1115" y2="550" stroke="#eef0f2"/>
+<text x="100" y="590" font-size="18" fill="#17202a">Average Cashback</text><text x="500" y="590" font-size="18" fill="#17202a">180.65</text><text x="780" y="590" font-size="18" fill="#17202a">160.37</text>
+<line x1="85" y1="610" x2="1115" y2="610" stroke="#eef0f2"/>
+<text x="100" y="645" font-size="18" fill="#17202a">Average Satisfaction</text><text x="500" y="645" font-size="18" fill="#17202a">3.00</text><text x="780" y="645" font-size="18" fill="#17202a">3.39</text>
+</g>
+</svg>
