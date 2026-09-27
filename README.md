@@ -117,6 +117,14 @@ The final cleaned dataset contains **5,628 customers** after the documented clea
 
 > These are project-level results calculated from the repository dataset and its documented cleaning/transformation workflow. They are not current industry statistics.
 
+## 📸 SQL Analysis Summary
+
+A recruiter-friendly visual summary of the executed churn analysis is included below.
+
+![SQL Analysis Summary](images/sql-analysis-summary.svg)
+
+> The complete 30-query analysis is available in `analysis/Business_Analysis_Queries.sql`. The visual summarizes the project's key validated results rather than replacing the underlying SQL.
+
 ## 🔎 Key Analytical Areas
 
 ### Customer Churn
