@@ -2,17 +2,24 @@ USE ecomm;
 
 -- ============================================================
 -- E-Commerce Customer Churn Analysis
--- Business Analysis Queries
+-- Business Analysis & Interview Queries
 -- ============================================================
+-- STEP 1:
 -- Run the original Ecommerce_Customer_Churn_Analysis.sql first.
--- This file assumes the cleaned/transformed customer_churn table
--- and the customer_returns table already exist.
+--
+-- STEP 2:
+-- Run these queries after the cleaned/transformed
+-- customer_churn and customer_returns tables exist.
 --
 -- Purpose:
--- Provide a clean, recruiter-friendly view of the key SQL
--- business questions in this project.
+-- Provide a clean recruiter-friendly collection of SQL
+-- business analysis and interview-focused queries.
 -- ============================================================
 
+
+-- ============================================================
+-- SECTION 1: CORE BUSINESS ANALYSIS
+-- ============================================================
 
 -- 1. Active vs Churned Customers
 SELECT
@@ -22,7 +29,16 @@ FROM customer_churn
 GROUP BY ChurnStatus;
 
 
--- 2. Average Tenure and Total Cashback of Churned Customers
+-- 2. Overall Customer Churn Rate
+SELECT
+    ROUND(
+        100.0 * SUM(ChurnStatus = 'Churned') / COUNT(*),
+        2
+    ) AS ChurnRatePercentage
+FROM customer_churn;
+
+
+-- 3. Average Tenure and Total Cashback of Churned Customers
 SELECT
     AVG(Tenure) AS AverageTenure,
     SUM(CashbackAmount) AS TotalCashback
@@ -30,7 +46,7 @@ FROM customer_churn
 WHERE ChurnStatus = 'Churned';
 
 
--- 3. Percentage of Churned Customers Who Complained
+-- 4. Percentage of Churned Customers Who Complained
 SELECT
     ROUND(
         100.0 * SUM(ComplaintReceived = 'Yes') / COUNT(*),
@@ -40,7 +56,35 @@ FROM customer_churn
 WHERE ChurnStatus = 'Churned';
 
 
--- 4. City Tier with the Most Churned Laptop & Accessory Customers
+-- 5. Churn Rate by Order Category
+SELECT
+    PreferredOrderCat,
+    COUNT(*) AS CustomerCount,
+    SUM(ChurnStatus = 'Churned') AS ChurnedCustomers,
+    ROUND(
+        100.0 * SUM(ChurnStatus = 'Churned') / COUNT(*),
+        2
+    ) AS ChurnRatePercentage
+FROM customer_churn
+GROUP BY PreferredOrderCat
+ORDER BY ChurnRatePercentage DESC;
+
+
+-- 6. Churn Rate by Warehouse-to-Home Distance
+SELECT
+    DistanceCategory,
+    COUNT(*) AS CustomerCount,
+    SUM(ChurnStatus = 'Churned') AS ChurnedCustomers,
+    ROUND(
+        100.0 * SUM(ChurnStatus = 'Churned') / COUNT(*),
+        2
+    ) AS ChurnRatePercentage
+FROM customer_churn
+GROUP BY DistanceCategory
+ORDER BY ChurnRatePercentage DESC;
+
+
+-- 7. City Tier with the Most Churned Laptop & Accessory Customers
 SELECT
     CityTier,
     COUNT(*) AS CustomerCount
@@ -52,7 +96,7 @@ ORDER BY CustomerCount DESC
 LIMIT 1;
 
 
--- 5. Most Common Payment Mode Among Active Customers
+-- 8. Most Common Payment Mode Among Active Customers
 SELECT
     PreferredPaymentMode,
     COUNT(*) AS CustomerCount
@@ -63,7 +107,7 @@ ORDER BY CustomerCount DESC
 LIMIT 1;
 
 
--- 6. Total Order Amount Hike for Single Customers Buying Mobile Phones
+-- 9. Total Order Amount Hike for Single Customers Buying Mobile Phones
 SELECT
     SUM(OrderAmountHikeFromlastYear) AS TotalOrderAmountHike
 FROM customer_churn
@@ -71,14 +115,14 @@ WHERE MaritalStatus = 'Single'
   AND PreferredOrderCat = 'Mobile Phone';
 
 
--- 7. Average Registered Devices Among UPI Customers
+-- 10. Average Registered Devices Among UPI Customers
 SELECT
     AVG(NumberOfDeviceRegistered) AS AverageDevices
 FROM customer_churn
 WHERE PreferredPaymentMode = 'UPI';
 
 
--- 8. City Tier with the Highest Number of Customers
+-- 11. City Tier with the Highest Number of Customers
 SELECT
     CityTier,
     COUNT(*) AS CustomerCount
@@ -88,7 +132,7 @@ ORDER BY CustomerCount DESC
 LIMIT 1;
 
 
--- 9. Gender with the Highest Coupon Usage
+-- 12. Gender with the Highest Coupon Usage
 SELECT
     Gender,
     SUM(CouponUsed) AS TotalCoupons
@@ -98,7 +142,7 @@ ORDER BY TotalCoupons DESC
 LIMIT 1;
 
 
--- 10. Customer Count and Maximum App Usage by Order Category
+-- 13. Customer Count and Maximum App Usage by Order Category
 SELECT
     PreferredOrderCat,
     COUNT(*) AS CustomerCount,
@@ -107,7 +151,7 @@ FROM customer_churn
 GROUP BY PreferredOrderCat;
 
 
--- 11. Total Orders by Credit Card Customers with Maximum Satisfaction
+-- 14. Total Orders by Credit Card Customers with Maximum Satisfaction
 SELECT
     SUM(OrderCount) AS TotalOrderCount
 FROM customer_churn
@@ -118,14 +162,14 @@ WHERE PreferredPaymentMode = 'Credit Card'
   );
 
 
--- 12. Average Satisfaction Score Among Customers Who Complained
+-- 15. Average Satisfaction Score Among Customers Who Complained
 SELECT
     AVG(SatisfactionScore) AS AverageSatisfactionScore
 FROM customer_churn
 WHERE ComplaintReceived = 'Yes';
 
 
--- 13. Order Categories with More Than 5 Coupons Used
+-- 16. Order Categories with More Than 5 Coupons Used
 SELECT
     PreferredOrderCat,
     COUNT(*) AS CustomerCount
@@ -135,7 +179,7 @@ GROUP BY PreferredOrderCat
 ORDER BY CustomerCount DESC;
 
 
--- 14. Top 3 Order Categories by Average Cashback
+-- 17. Top 3 Order Categories by Average Cashback
 SELECT
     PreferredOrderCat,
     AVG(CashbackAmount) AS AverageCashback
@@ -145,7 +189,7 @@ ORDER BY AverageCashback DESC
 LIMIT 3;
 
 
--- 15. Customer Distribution by Warehouse-to-Home Distance and Churn Status
+-- 18. Customer Distribution by Warehouse-to-Home Distance and Churn Status
 SELECT
     DistanceCategory,
     ChurnStatus,
@@ -155,7 +199,7 @@ GROUP BY DistanceCategory, ChurnStatus
 ORDER BY DistanceCategory, ChurnStatus;
 
 
--- 16. Married, Tier-1 Customers with Above-Average Order Count
+-- 19. Married, Tier-1 Customers with Above-Average Order Count
 SELECT
     *
 FROM customer_churn
@@ -167,7 +211,7 @@ WHERE MaritalStatus = 'Married'
   );
 
 
--- 17. Returned Customers Who Churned and Complained
+-- 20. Returned Customers Who Churned and Complained
 SELECT
     r.*,
     c.*
@@ -178,7 +222,161 @@ WHERE c.ChurnStatus = 'Churned'
   AND c.ComplaintReceived = 'Yes';
 
 
--- 18. Total Customers in the Final Cleaned Dataset
+-- 21. Total Customers in the Final Cleaned Dataset
 SELECT
     COUNT(*) AS TotalCustomers
 FROM customer_churn;
+
+
+-- ============================================================
+-- SECTION 2: INTERVIEW-FOCUSED SQL ANALYSIS
+-- ============================================================
+
+-- 22. Churn and Complaint Rate by Customer Status
+SELECT
+    ChurnStatus,
+    COUNT(*) AS CustomerCount,
+    SUM(ComplaintReceived = 'Yes') AS CustomersWhoComplained,
+    ROUND(
+        100.0 * SUM(ComplaintReceived = 'Yes') / COUNT(*),
+        2
+    ) AS ComplaintRatePercentage
+FROM customer_churn
+GROUP BY ChurnStatus;
+
+
+-- 23. Churn Analysis by Preferred Payment Mode
+SELECT
+    PreferredPaymentMode,
+    COUNT(*) AS CustomerCount,
+    SUM(ChurnStatus = 'Churned') AS ChurnedCustomers,
+    ROUND(
+        100.0 * SUM(ChurnStatus = 'Churned') / COUNT(*),
+        2
+    ) AS ChurnRatePercentage
+FROM customer_churn
+GROUP BY PreferredPaymentMode
+ORDER BY ChurnRatePercentage DESC;
+
+
+-- 24. Average Customer Metrics by Churn Status
+SELECT
+    ChurnStatus,
+    ROUND(AVG(Tenure), 2) AS AverageTenure,
+    ROUND(AVG(OrderCount), 2) AS AverageOrderCount,
+    ROUND(AVG(CashbackAmount), 2) AS AverageCashback,
+    ROUND(AVG(SatisfactionScore), 2) AS AverageSatisfactionScore
+FROM customer_churn
+GROUP BY ChurnStatus;
+
+
+-- 25. Customer Segmentation Using CASE
+SELECT
+    CASE
+        WHEN OrderCount >= 10 THEN 'High Order Customers'
+        WHEN OrderCount >= 5 THEN 'Medium Order Customers'
+        ELSE 'Low Order Customers'
+    END AS CustomerSegment,
+    COUNT(*) AS CustomerCount
+FROM customer_churn
+GROUP BY CustomerSegment
+ORDER BY CustomerCount DESC;
+
+
+-- 26. Top 10 Customers by Order Count
+SELECT
+    CustomerID,
+    OrderCount,
+    ChurnStatus,
+    PreferredOrderCat,
+    SatisfactionScore
+FROM customer_churn
+ORDER BY OrderCount DESC
+LIMIT 10;
+
+
+-- 27. Customers with Above-Average Cashback
+SELECT
+    CustomerID,
+    CashbackAmount,
+    ChurnStatus,
+    PreferredOrderCat
+FROM customer_churn
+WHERE CashbackAmount > (
+    SELECT AVG(CashbackAmount)
+    FROM customer_churn
+)
+ORDER BY CashbackAmount DESC;
+
+
+-- 28. Category-Level Customer and Satisfaction Analysis
+SELECT
+    PreferredOrderCat,
+    COUNT(*) AS CustomerCount,
+    ROUND(AVG(SatisfactionScore), 2) AS AverageSatisfaction,
+    ROUND(AVG(CashbackAmount), 2) AS AverageCashback
+FROM customer_churn
+GROUP BY PreferredOrderCat
+ORDER BY CustomerCount DESC;
+
+
+-- 29. Top 3 Customers by Cashback Within Each Order Category
+-- Demonstrates the MySQL window function RANK().
+SELECT
+    CustomerID,
+    PreferredOrderCat,
+    CashbackAmount,
+    CustomerRank
+FROM (
+    SELECT
+        CustomerID,
+        PreferredOrderCat,
+        CashbackAmount,
+        RANK() OVER (
+            PARTITION BY PreferredOrderCat
+            ORDER BY CashbackAmount DESC
+        ) AS CustomerRank
+    FROM customer_churn
+) ranked_customers
+WHERE CustomerRank <= 3
+ORDER BY PreferredOrderCat, CustomerRank;
+
+
+-- 30. Return Count and Total Refund Amount
+SELECT
+    COUNT(*) AS TotalReturns,
+    SUM(RefundAmount) AS TotalRefundAmount,
+    ROUND(AVG(RefundAmount), 2) AS AverageRefundAmount
+FROM customer_returns;
+
+
+-- 31. Returned Customers by Churn Status
+SELECT
+    c.ChurnStatus,
+    COUNT(*) AS ReturnedCustomers,
+    SUM(r.RefundAmount) AS TotalRefundAmount
+FROM customer_returns r
+JOIN customer_churn c
+    ON r.CustomerID = c.CustomerID
+GROUP BY c.ChurnStatus;
+
+
+-- ============================================================
+-- SECTION 3: INTERVIEW SKILLS COVERED
+-- ============================================================
+-- Filtering
+-- Aggregation
+-- GROUP BY / HAVING
+-- ORDER BY / LIMIT
+-- CASE expressions
+-- Subqueries
+-- JOIN
+-- Conditional aggregation
+-- Data transformation
+-- Business KPI calculation
+-- Churn-rate calculation
+-- Customer segmentation
+-- Window functions
+-- Ranking
+-- Return/refund analysis
+-- ============================================================
