@@ -7,6 +7,9 @@ USE ecomm;
 -- Prerequisite:
 -- Run Ecommerce_Customer_Churn_Analysis.sql first.
 -- This file uses the cleaned/transformed tables created there.
+--
+-- The original SQL file is intentionally NOT modified by this
+-- analysis file.
 -- ============================================================
 
 
@@ -141,9 +144,9 @@ GROUP BY PreferredOrderCat
 ORDER BY CustomerCount DESC;
 
 
--- 12. Total Order Amount Hike for Single Customers Buying Mobile Phones
+-- 12. Average Order-Amount-Hike Value for Single Mobile-Phone Customers
 SELECT
-    SUM(OrderAmountHikeFromlastYear) AS TotalOrderAmountHike
+    ROUND(AVG(OrderAmountHikeFromlastYear), 2) AS AverageOrderAmountHike
 FROM customer_churn
 WHERE MaritalStatus = 'Single'
   AND PreferredOrderCat = 'Mobile Phone';
@@ -174,6 +177,7 @@ LIMIT 3;
 -- ============================================================
 
 -- 15. Customer Segmentation by Order Count
+-- Rule-based segmentation created for analytical demonstration.
 SELECT
     CASE
         WHEN OrderCount >= 10 THEN 'High Order Customers'
@@ -224,7 +228,7 @@ ORDER BY CustomerCount DESC;
 
 
 -- 19. Top 3 Customers by Cashback Within Each Order Category
--- Demonstrates the MySQL window function RANK().
+-- Uses ROW_NUMBER() so exactly 3 customers are returned per category.
 SELECT
     CustomerID,
     PreferredOrderCat,
@@ -235,9 +239,9 @@ FROM (
         CustomerID,
         PreferredOrderCat,
         CashbackAmount,
-        RANK() OVER (
+        ROW_NUMBER() OVER (
             PARTITION BY PreferredOrderCat
-            ORDER BY CashbackAmount DESC
+            ORDER BY CashbackAmount DESC, CustomerID
         ) AS CustomerRank
     FROM customer_churn
 ) ranked_customers
@@ -263,11 +267,22 @@ WHERE MaritalStatus = 'Married'
 ORDER BY OrderCount DESC, CustomerID;
 
 
+-- 21. Order Categories with More Than 500 Customers
+-- Demonstrates HAVING for post-aggregation filtering.
+SELECT
+    PreferredOrderCat,
+    COUNT(*) AS CustomerCount
+FROM customer_churn
+GROUP BY PreferredOrderCat
+HAVING COUNT(*) > 500
+ORDER BY CustomerCount DESC;
+
+
 -- ============================================================
 -- SECTION 4: RETURNS & REFUNDS
 -- ============================================================
 
--- 21. Return Summary
+-- 22. Return Summary
 SELECT
     COUNT(*) AS TotalReturns,
     ROUND(SUM(RefundAmount), 2) AS TotalRefundAmount,
@@ -275,7 +290,7 @@ SELECT
 FROM customer_returns;
 
 
--- 22. Returned Customers by Churn Status
+-- 23. Returned Customers by Churn Status
 SELECT
     c.ChurnStatus,
     COUNT(*) AS ReturnedCustomers,
@@ -288,7 +303,7 @@ GROUP BY c.ChurnStatus
 ORDER BY TotalRefundAmount DESC;
 
 
--- 23. Returned Customers Who Churned and Complained
+-- 24. Returned Customers Who Churned and Complained
 SELECT
     r.ReturnID,
     r.CustomerID,
@@ -310,13 +325,13 @@ ORDER BY r.RefundAmount DESC, r.ReturnID;
 -- SECTION 5: DATA QUALITY VALIDATION
 -- ============================================================
 
--- 24. Final Customer Count
+-- 25. Final Customer Count
 SELECT
     COUNT(*) AS FinalCustomerCount
 FROM customer_churn;
 
 
--- 25. Check for Duplicate Customer IDs
+-- 26. Check for Duplicate Customer IDs
 SELECT
     CustomerID,
     COUNT(*) AS DuplicateCount
@@ -325,7 +340,7 @@ GROUP BY CustomerID
 HAVING COUNT(*) > 1;
 
 
--- 26. Check Remaining NULL Values in Key Analytical Fields
+-- 27. Check Remaining NULL Values in Key Analytical Fields
 SELECT
     SUM(Tenure IS NULL) AS NullTenure,
     SUM(WarehouseToHome IS NULL) AS NullWarehouseToHome,
@@ -340,14 +355,14 @@ SELECT
 FROM customer_churn;
 
 
--- 27. Check Distance Outliers Remaining After Cleaning
+-- 28. Check Distance Outliers Remaining After Cleaning
 SELECT
     COUNT(*) AS RemainingDistanceOutliers
 FROM customer_churn
 WHERE WarehouseToHome > 100;
 
 
--- 28. Check Expected Churn and Complaint Labels
+-- 29. Check Expected Churn and Complaint Labels
 SELECT
     ChurnStatus,
     ComplaintReceived,
@@ -355,6 +370,15 @@ SELECT
 FROM customer_churn
 GROUP BY ChurnStatus, ComplaintReceived
 ORDER BY ChurnStatus, ComplaintReceived;
+
+
+-- 30. Check Standardized Payment Modes
+SELECT
+    PreferredPaymentMode,
+    COUNT(*) AS CustomerCount
+FROM customer_churn
+GROUP BY PreferredPaymentMode
+ORDER BY CustomerCount DESC;
 
 
 -- ============================================================
@@ -368,7 +392,7 @@ ORDER BY ChurnStatus, ComplaintReceived;
 -- CASE expressions
 -- Subqueries
 -- INNER JOIN
--- Window functions (RANK)
+-- Window functions (ROW_NUMBER)
 -- Customer segmentation
 -- Data-quality validation
 -- ============================================================
