@@ -33,6 +33,10 @@ The figures below are documented results from the repository's dataset and clean
 
 These results describe the project dataset, not an industry benchmark. Group comparisons are descriptive and do not establish cause and effect.
 
+![E-commerce customer churn analysis summary](images/sql-analysis-summary.svg)
+
+*Static summary graphic based on the documented project results. See the SQL analysis files for the queries and metric definitions.*
+
 ## Files
 | File | Purpose |
 |---|---|
