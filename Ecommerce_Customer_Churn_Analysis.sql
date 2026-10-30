@@ -1,6 +1,9 @@
-DROP DATABASE IF EXISTS ecomm;
-CREATE DATABASE ecomm;
+CREATE DATABASE IF NOT EXISTS ecomm;
 USE ecomm;
+
+-- Rebuild only the project tables; preserve the database and unrelated tables.
+DROP TABLE IF EXISTS customer_returns;
+DROP TABLE IF EXISTS customer_churn;
 
 CREATE TABLE customer_churn(
     CustomerID                  INT  PRIMARY KEY,
@@ -5669,6 +5672,16 @@ SELECT
     AVG(DaySinceLastOrder) AS Mean_DaySinceLastOrder
 FROM customer_churn;
 
+-- Missing-value treatment (dataset-specific):
+-- WarehouseToHome: rounded mean = 16
+-- HourSpendOnApp: mode = 3
+-- OrderAmountHikeFromlastYear: rounded mean = 16
+-- DaySinceLastOrder: rounded mean = 5
+-- Tenure: mode = 1
+-- CouponUsed: mode = 1
+-- OrderCount: mode = 2
+-- These replacements are assumptions for this portfolio dataset, not universal rules.
+
 UPDATE customer_churn
 SET WarehouseToHome = 16
 WHERE WarehouseToHome IS NULL
@@ -5932,6 +5945,8 @@ CREATE TABLE customer_returns (
     RefundAmount DECIMAL(10,2)
 );
 
+-- Sample return and refund records created for SQL JOIN practice.
+-- These are illustrative records, not verified business transactions.
 INSERT INTO customer_returns
 (ReturnID, CustomerID, ReturnDate, RefundAmount)
 VALUES
