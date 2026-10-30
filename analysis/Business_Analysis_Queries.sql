@@ -152,7 +152,8 @@ WHERE MaritalStatus = 'Single'
   AND PreferredOrderCat = 'Mobile Phone';
 
 
--- 13. Order Categories with More Than 5 Coupons Used
+-- 13. Customer Count by Order Category
+-- Only customers with more than 5 coupons used are included.
 SELECT
     PreferredOrderCat,
     COUNT(*) AS CustomerCount
@@ -293,7 +294,7 @@ FROM customer_returns;
 -- 23. Returned Customers by Churn Status
 SELECT
     c.ChurnStatus,
-    COUNT(*) AS ReturnedCustomers,
+    COUNT(DISTINCT c.CustomerID) AS ReturnedCustomerCount,
     ROUND(SUM(r.RefundAmount), 2) AS TotalRefundAmount,
     ROUND(AVG(r.RefundAmount), 2) AS AverageRefundAmount
 FROM customer_returns r
