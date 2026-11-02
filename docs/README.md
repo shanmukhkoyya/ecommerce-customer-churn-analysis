@@ -53,17 +53,23 @@ These are documented results from the supplied project dataset.
 ## 5. How to Execute
 
 1. Install MySQL Server and MySQL Workbench.
-2. Open the main SQL workflow file.
-3. Execute it to create and prepare the database tables.
-4. Open the business analysis SQL file.
-5. Execute the queries section by section.
-6. Review the output and validation results.
+2. Read the execution-safety note below before running the script.
+3. Open the main SQL workflow file.
+4. Execute it to create and prepare the project tables.
+5. Open the business analysis SQL file.
+6. Execute the queries section by section.
+7. Review the output and validation results.
+
+**Execution safety:** The main SQL workflow uses `CREATE DATABASE IF NOT EXISTS ecomm`, then drops and rebuilds the project's `customer_returns` and `customer_churn` tables. A full rerun therefore deletes and replaces data in those two tables. It does not drop the `ecomm` database or unrelated tables. Back up any data you need from the two project tables before executing the script.
 
 **Important:** Execute the main SQL file first. The business analysis file depends on the tables created by it.
 
 ## 6. Project Limitations
 
 - Findings describe the supplied dataset, not a live e-commerce business.
+- The returns table contains only 8 illustrative records created for SQL JOIN practice; they are not verified transactions or a representative sample.
+- Return/refund query results describe those 8 example records only and cannot be generalised to the full customer dataset or used to calculate a business return rate.
+- The main SQL script replaces the project's `customer_returns` and `customer_churn` tables when rerun. Back up data in those tables before execution.
 - Customer group comparisons do not prove cause and effect.
 - Customer segments use project-defined rules.
 - This is descriptive SQL analysis, not a predictive churn model.
