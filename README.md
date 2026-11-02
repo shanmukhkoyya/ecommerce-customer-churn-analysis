@@ -55,11 +55,13 @@ The project is organised into two SQL files.
 
 **File:** `Ecommerce_Customer_Churn_Analysis.sql`
 
-- Set up the database and tables.
+- Create the `ecomm` database if it does not already exist.
+- Drop and rebuild only the project's `customer_returns` and `customer_churn` tables.
 - Review and clean selected fields.
 - Handle missing values and inconsistent categories.
 - Prepare analysis-ready customer fields.
-- Create the cleaned customer and returns tables.
+
+**Execution safety:** The script is not read-only. Every full run replaces the two project tables named above, so any existing data stored in those tables will be lost. It does not drop the `ecomm` database or unrelated tables in that database. Back up any project-table data you need before running it.
 
 ### Step 2 — Business Analysis
 
@@ -158,6 +160,9 @@ ecommerce-customer-churn-analysis/
 
 - Results depend on the supplied project dataset and cleaning choices.
 - Distance bands and order-count segments are project-specific analytical rules.
+- The returns table contains only **8 illustrative records** created for SQL JOIN practice. They are not verified transactions or a representative sample of customer returns.
+- Return/refund query outputs describe those 8 illustrative records only; they must not be generalised to all 5,628 customer records or used to estimate a business return/refund rate.
+- The main SQL script drops and recreates the project's `customer_returns` and `customer_churn` tables on each full run. Back up anything important in those two tables first; other databases and unrelated tables are not dropped by this script.
 - Group comparisons are descriptive and do not establish cause and effect.
 - This is a SQL-based descriptive analysis, not a predictive machine-learning churn model.
 - The calculated churn rate should not be interpreted as a real company's current churn rate.
