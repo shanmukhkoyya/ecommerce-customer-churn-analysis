@@ -1,93 +1,109 @@
-# E-commerce Customer Churn | SQL Analysis Playbook
-
 <div align="center">
 
-**CUSTOMER RETENTION · BEHAVIOUR · DATA QUALITY**
+# CUSTOMER CHURN / SQL INVESTIGATION
 
-MySQL · Relational Queries · Descriptive Analysis
+**E-COMMERCE RETENTION ANALYSIS**
+
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-analysis-2F6F8F?style=for-the-badge)
+![Project type](https://img.shields.io/badge/Study-descriptive%20analytics-278A72?style=for-the-badge)
 
 </div>
 
-## Why this analysis?
+## Mission control — dataset scoreboard
 
-The project explores how customer churn is represented in a supplied e-commerce dataset. SQL is used to prepare the records, create analysis-ready fields, compare customer groups, and validate selected data-quality conditions.
-
-## Dataset scoreboard
-
-| Measure | Result |
+|  |  |
 |---|---:|
-| Source customer records | 5,630 |
-| Records retained after documented cleaning | 5,628 |
-| Active customers | 4,680 |
-| Churned customers | 948 |
-| Churn rate | 16.84% |
-| Average tenure — active group | 11.09 |
-| Average tenure — churned group | 3.18 |
-| Churned customers who complained | 53.59% |
+| Source customer rows | **5,630** |
+| Rows retained after documented exclusions | **5,628** |
+| Active customers | **4,680** |
+| Churned customers | **948** |
+| **Churn rate** | **16.84%** |
 
-These values describe the cleaned project dataset only.
+| Segment comparison | Average tenure |
+|---|---:|
+| Active customers | 11.09 |
+| Churned customers | 3.18 |
 
-## Query workflow
+**Complaint flag:** 53.59% of customers in the churned group are marked as having complained.
+
+<sub>All figures describe the cleaned project dataset. They are not live e-commerce metrics.</sub>
+
+## Investigation map
+
+```mermaid
+flowchart TD
+    A[Supplied customer data] --> B[Main SQL preparation]
+    B --> C[customer_churn]
+    B --> D[Illustrative customer_returns]
+    C --> E[Customer KPIs and segmentation]
+    D --> F[JOIN practice only]
+    E --> G[Data-quality checks]
+    F --> G
+    G --> H[Document assumptions and limits]
+```
+
+## Query console — where to start
 
 | File | Role |
 |---|---|
-| [Main SQL workflow](Ecommerce_Customer_Churn_Analysis.sql) | Creates the project tables, prepares customer fields and creates the sample returns table |
-| [Business Analysis Queries](analysis/Business_Analysis_Queries.sql) | 30 queries across KPIs, behaviour, segmentation, returns/refunds and data-quality validation |
-| [Documentation index](docs/README.md) | Query sections, execution notes and limitations |
+| [Ecommerce_Customer_Churn_Analysis.sql](Ecommerce_Customer_Churn_Analysis.sql) | Creates the project database/tables and prepares the analysis dataset |
+| [Business_Analysis_Queries.sql](analysis/Business_Analysis_Queries.sql) | 30 queries covering KPIs, behaviour, segmentation, returns/refunds and quality checks |
+| [Documentation index](docs/README.md) | Detailed query map and execution notes |
 
-### Analysis themes
+### Query themes
 
-**Customer status** — total customers, churned customers and churn-rate calculations.
+| Workbench | Questions investigated |
+|---|---|
+| Customer status | How many active and churned records are present? |
+| Behaviour | How do tenure, satisfaction, cashback, coupons and complaints compare? |
+| Segmentation | How do category, distance and project-defined customer groups differ? |
+| Returns | How can a small related table be joined to the customer data? |
+| QA checks | Are duplicates, NULLs, unusual values or inconsistent labels present? |
 
-**Customer behaviour** — tenure, order count, satisfaction, cashback, payment preferences, coupons and complaints.
+## Observations — not causal claims
 
-**Segmentation** — category and distance groups, conditional logic, ranking and subqueries.
+- The cleaned dataset records a 16.84% churn rate.
+- The churned group has lower average tenure (3.18) than the active group (11.09).
+- Complaint flags are more common within the churned group (53.59%).
 
-**Returns and refunds** — JOIN practice using the small illustrative returns table.
+These are descriptive associations. They do not prove that complaints or tenure cause churn.
 
-**Data quality** — duplicate, NULL, outlier and label checks.
+## Reproduction steps
 
-## What stands out in this dataset?
+```text
+1. Open MySQL Workbench (or another MySQL client)
+2. Read the destructive-operation warning
+3. Use a disposable practice environment
+4. Run the main SQL workflow
+5. Open analysis/Business_Analysis_Queries.sql
+6. Execute and review each query section
+```
 
-- The cleaned data has a churn rate of 16.84%.
-- Average tenure is lower for the churned group (3.18) than for the active group (11.09).
-- 53.59% of churned customers are marked as having complained.
+### SQL reset scope
 
-These are associations observed in the supplied data. They do not prove that complaints or tenure cause churn.
+The main workflow creates database `ecomm` if required and drops/rebuilds only the project tables `customer_returns` and `customer_churn`.
 
-![SQL analysis summary](images/sql-analysis-summary.svg)
-
-<sub>Static summary graphic based on the documented project results.</sub>
-
-## Data preparation decisions
-
-The project documents missing-value handling and standardisation for the supplied fields. Two records with WarehouseToHome values above 100 were excluded as extreme observations for this exercise. That is a project-specific choice, not a universal business rule; it should be reviewed against domain context before real-world use.
-
-## Important: execution safety
+```sql
+DROP TABLE IF EXISTS customer_returns;
+DROP TABLE IF EXISTS customer_churn;
+```
 
 > [!CAUTION]
-> The main SQL file is not read-only. It creates the ecomm database if needed, then drops and rebuilds only the customer_returns and customer_churn project tables. Existing data in those two tables will be lost on a full rerun. The script does not drop the ecomm database or unrelated tables. Back up any project-table data you need before execution.
+> A rerun removes existing data in those two project tables. The script does **not** drop the `ecomm` database or unrelated tables. Back up project-table data before rerunning.
 
-## Returns table: sample data only
+## Returns table — training sample only
 
-The SQL workflow inserts **8 illustrative return/refund records** for JOIN practice. They are not verified business transactions and are not a representative sample of returns across all 5,628 customer records. Outputs from return-related queries must not be used to estimate a real business return rate or refund exposure.
+The workflow inserts **8 illustrative return/refund rows** for JOIN practice. These are not verified transactions and are not a representative sample of returns across all 5,628 customer records. Do not use return-query output to calculate a real business return rate or refund exposure.
 
-## Reproduce the work
+## Cleaning decision register
 
-1. Use MySQL Server and MySQL Workbench or a compatible MySQL client.
-2. Read the execution-safety warning above.
-3. Run the main SQL workflow first in a disposable practice environment.
-4. Open the business analysis file and execute queries section by section.
-5. Review result sets and the final data-quality queries.
+Two `WarehouseToHome` observations above 100 (126 and 127) were excluded as extreme observations for this exercise. This is a project-specific assumption—not a universal rule. Domain context should be checked before using the same threshold in a real business.
 
-## Skills demonstrated
+## Scope boundary
 
-SELECT · WHERE · GROUP BY · HAVING · CASE · aggregate functions · joins · subqueries · conditional aggregation · window functions · NULL/duplicate checks
-
-## Project boundaries
-
-This is descriptive SQL analysis, not a predictive machine-learning churn model. Segments use project-defined rules, findings refer only to the supplied data, and group comparisons do not establish cause and effect.
+This is descriptive SQL analysis, not a predictive churn model. Segmentation rules are project-defined, all findings refer to the supplied dataset, and group comparisons do not establish cause and effect.
 
 ---
 
-**Shanmukh Koyya** · [GitHub](https://github.com/shanmukhkoyya) · [LinkedIn](https://www.linkedin.com/in/shanmukh-koyya/) · [Email](mailto:shanmukhkoyya1234@gmail.com)
+**Author:** Shanmukh Koyya · [GitHub](https://github.com/shanmukhkoyya) · [LinkedIn](https://www.linkedin.com/in/shanmukh-koyya/) · [Email](mailto:shanmukhkoyya123@gmail.com)
