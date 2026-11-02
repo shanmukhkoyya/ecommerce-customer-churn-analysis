@@ -1,30 +1,45 @@
-<div align="center"><h1>🛒 CUSTOMER CHURN CONTROL ROOM</h1><b>SQL investigation · E-commerce retention</b><br/><img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/SQL-ANALYSIS-236B83?style=for-the-badge"/></div>
+<div align="center">
+<h1>🛒 CUSTOMER CHURN CONTROL ROOM</h1>
+<p><b>SQL investigation · E-commerce retention</b></p>
+<img src="https://img.shields.io/badge/MYSQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/>
+<img src="https://img.shields.io/badge/CHURN-16.84%25-9B3A3A?style=for-the-badge"/>
+</div>
 
 ## Dataset scoreboard
-| Cleaned rows | Active | Churned | Churn rate |
+| Cleaned customers | Active | Churned | Churn rate |
 |---:|---:|---:|---:|
-| 5,628 | 4,680 | 948 | **16.84%** |
-| Active average tenure | Churned average tenure | | |
-| 11.09 | 3.18 | | |
-
-**53.59%** of the churned group has a complaint flag. Metrics describe the supplied project dataset only.
+| **5,628** | 4,680 | 948 | **16.84%** |
+| Active avg. tenure | Churned avg. tenure | Churned with complaint flag | |
+| 11.09 | 3.18 | 53.59% | |
 
 ## Investigation pipeline
-<p align="center">📥 Source → 🧹 Clean → 🗃️ SQL tables → 🔎 Segment → ✅ QA → 📊 Findings</p>
+```mermaid
+flowchart LR
+ A[Source CSV] --> B[Data cleaning]
+ B --> C[MySQL tables]
+ C --> D[Segmentation]
+ D --> E[Business queries]
+ E --> F[Quality checks]
+```
 
 ## Query workbench
-| Script | Purpose |
+| Asset | Purpose |
 |---|---|
 | [Main SQL](Ecommerce_Customer_Churn_Analysis.sql) | Database and project table preparation |
-| [30 business queries](analysis/Business_Analysis_Queries.sql) | KPIs, behaviour, segments and QA |
+| [Business analysis queries](analysis/Business_Analysis_Queries.sql) | KPIs, behaviour, segments and QA |
 | [Documentation index](docs/README.md) | Detailed query map |
 
-<details><summary><b>Explore the analysis modules</b></summary>
-1. Customer status and churn rate<br/>2. Tenure and complaint comparisons<br/>3. Customer/category segmentation<br/>4. Returns JOIN practice<br/>5. Duplicate, NULL and outlier checks
+<details><summary><b>Open the investigation modules</b></summary>
+
+1. Customer status and churn rate
+2. Tenure and complaint comparisons
+3. Customer/category segmentation
+4. Returns JOIN practice
+5. Duplicate, NULL and outlier checks
 </details>
 
 > [!CAUTION]
-> The main script drops and recreates only customer_returns and customer_churn. It does not drop the ecomm database or unrelated tables. Back up these project tables and use a practice database.
+> The main script drops and recreates only `customer_returns` and `customer_churn`. It does not drop the `ecomm` database or unrelated tables. Back up these project tables and use a practice database.
 
 **Returns data warning:** Eight inserted return/refund rows are illustrative JOIN examples, not verified transactions. Do not use them to calculate a real return rate.
 
