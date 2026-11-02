@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/readme-hero.svg" alt="CUSTOMER CHURN CONTROL ROOM — MYSQL • RETENTION • CUSTOMER SEGMENTS" width="100%"/></p>
+
 <div align="center">
 <h1>🛒 CUSTOMER CHURN CONTROL ROOM</h1>
 <p><b>SQL investigation · E-commerce retention</b></p>
