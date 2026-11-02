@@ -1,109 +1,33 @@
-<div align="center">
+<div align="center"><h1>🛒 CUSTOMER CHURN CONTROL ROOM</h1><b>SQL investigation · E-commerce retention</b><br/><img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/SQL-ANALYSIS-236B83?style=for-the-badge"/></div>
 
-# CUSTOMER CHURN / SQL INVESTIGATION
+## Dataset scoreboard
+| Cleaned rows | Active | Churned | Churn rate |
+|---:|---:|---:|---:|
+| 5,628 | 4,680 | 948 | **16.84%** |
+| Active average tenure | Churned average tenure | | |
+| 11.09 | 3.18 | | |
 
-**E-COMMERCE RETENTION ANALYSIS**
+**53.59%** of the churned group has a complaint flag. Metrics describe the supplied project dataset only.
 
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-analysis-2F6F8F?style=for-the-badge)
-![Project type](https://img.shields.io/badge/Study-descriptive%20analytics-278A72?style=for-the-badge)
+## Investigation pipeline
+<p align="center">📥 Source → 🧹 Clean → 🗃️ SQL tables → 🔎 Segment → ✅ QA → 📊 Findings</p>
 
-</div>
-
-## Mission control — dataset scoreboard
-
-|  |  |
-|---|---:|
-| Source customer rows | **5,630** |
-| Rows retained after documented exclusions | **5,628** |
-| Active customers | **4,680** |
-| Churned customers | **948** |
-| **Churn rate** | **16.84%** |
-
-| Segment comparison | Average tenure |
-|---|---:|
-| Active customers | 11.09 |
-| Churned customers | 3.18 |
-
-**Complaint flag:** 53.59% of customers in the churned group are marked as having complained.
-
-<sub>All figures describe the cleaned project dataset. They are not live e-commerce metrics.</sub>
-
-## Investigation map
-
-```mermaid
-flowchart TD
-    A[Supplied customer data] --> B[Main SQL preparation]
-    B --> C[customer_churn]
-    B --> D[Illustrative customer_returns]
-    C --> E[Customer KPIs and segmentation]
-    D --> F[JOIN practice only]
-    E --> G[Data-quality checks]
-    F --> G
-    G --> H[Document assumptions and limits]
-```
-
-## Query console — where to start
-
-| File | Role |
+## Query workbench
+| Script | Purpose |
 |---|---|
-| [Ecommerce_Customer_Churn_Analysis.sql](Ecommerce_Customer_Churn_Analysis.sql) | Creates the project database/tables and prepares the analysis dataset |
-| [Business_Analysis_Queries.sql](analysis/Business_Analysis_Queries.sql) | 30 queries covering KPIs, behaviour, segmentation, returns/refunds and quality checks |
-| [Documentation index](docs/README.md) | Detailed query map and execution notes |
+| [Main SQL](Ecommerce_Customer_Churn_Analysis.sql) | Database and project table preparation |
+| [30 business queries](analysis/Business_Analysis_Queries.sql) | KPIs, behaviour, segments and QA |
+| [Documentation index](docs/README.md) | Detailed query map |
 
-### Query themes
-
-| Workbench | Questions investigated |
-|---|---|
-| Customer status | How many active and churned records are present? |
-| Behaviour | How do tenure, satisfaction, cashback, coupons and complaints compare? |
-| Segmentation | How do category, distance and project-defined customer groups differ? |
-| Returns | How can a small related table be joined to the customer data? |
-| QA checks | Are duplicates, NULLs, unusual values or inconsistent labels present? |
-
-## Observations — not causal claims
-
-- The cleaned dataset records a 16.84% churn rate.
-- The churned group has lower average tenure (3.18) than the active group (11.09).
-- Complaint flags are more common within the churned group (53.59%).
-
-These are descriptive associations. They do not prove that complaints or tenure cause churn.
-
-## Reproduction steps
-
-```text
-1. Open MySQL Workbench (or another MySQL client)
-2. Read the destructive-operation warning
-3. Use a disposable practice environment
-4. Run the main SQL workflow
-5. Open analysis/Business_Analysis_Queries.sql
-6. Execute and review each query section
-```
-
-### SQL reset scope
-
-The main workflow creates database `ecomm` if required and drops/rebuilds only the project tables `customer_returns` and `customer_churn`.
-
-```sql
-DROP TABLE IF EXISTS customer_returns;
-DROP TABLE IF EXISTS customer_churn;
-```
+<details><summary><b>Explore the analysis modules</b></summary>
+1. Customer status and churn rate<br/>2. Tenure and complaint comparisons<br/>3. Customer/category segmentation<br/>4. Returns JOIN practice<br/>5. Duplicate, NULL and outlier checks
+</details>
 
 > [!CAUTION]
-> A rerun removes existing data in those two project tables. The script does **not** drop the `ecomm` database or unrelated tables. Back up project-table data before rerunning.
+> The main script drops and recreates only customer_returns and customer_churn. It does not drop the ecomm database or unrelated tables. Back up these project tables and use a practice database.
 
-## Returns table — training sample only
+**Returns data warning:** Eight inserted return/refund rows are illustrative JOIN examples, not verified transactions. Do not use them to calculate a real return rate.
 
-The workflow inserts **8 illustrative return/refund rows** for JOIN practice. These are not verified transactions and are not a representative sample of returns across all 5,628 customer records. Do not use return-query output to calculate a real business return rate or refund exposure.
+**Cleaning note:** WarehouseToHome values 126 and 127 were excluded as extreme observations for this exercise. Validate thresholds with business context.
 
-## Cleaning decision register
-
-Two `WarehouseToHome` observations above 100 (126 and 127) were excluded as extreme observations for this exercise. This is a project-specific assumption—not a universal rule. Domain context should be checked before using the same threshold in a real business.
-
-## Scope boundary
-
-This is descriptive SQL analysis, not a predictive churn model. Segmentation rules are project-defined, all findings refer to the supplied dataset, and group comparisons do not establish cause and effect.
-
----
-
-**Author:** Shanmukh Koyya · [GitHub](https://github.com/shanmukhkoyya) · [LinkedIn](https://www.linkedin.com/in/shanmukh-koyya/) · [Email](mailto:shanmukhkoyya123@gmail.com)
+**Interpretation:** These are descriptive associations, not proof that complaints or tenure cause churn. This is not a predictive model.
