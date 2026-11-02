@@ -5738,6 +5738,11 @@ SET OrderCount = 2
 WHERE OrderCount IS NULL
   AND CustomerID > 0;
   
+-- Project-specific outlier treatment:
+-- Two records have WarehouseToHome values above 100.
+-- They are excluded from the cleaned analysis dataset.
+-- Verify these values against the original source or business rules
+-- before applying this exclusion in a real business environment.
 DELETE FROM customer_churn
 WHERE WarehouseToHome > 100
   AND CustomerID > 0;
@@ -5905,8 +5910,10 @@ LIMIT 3;
 
 SELECT PreferredPaymentMode, COUNT(*) AS CustomerCount
 FROM customer_churn
+-- Customers with 10-month tenure and more than 5 orders,
+-- grouped by preferred payment mode.
 WHERE Tenure = 10
-  AND OrderCount > 500
+  AND OrderCount > 5
 GROUP BY PreferredPaymentMode;
 
 ALTER TABLE customer_churn
