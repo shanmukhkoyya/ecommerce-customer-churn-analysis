@@ -1,176 +1,93 @@
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:14243B,100:00C9D8&height=180&section=header&text=E-COMMERCE%20CUSTOMER%20CHURN&fontSize=28&fontColor=ffffff&fontAlignY=40&desc=SQL%20%7C%20MYSQL%20%7C%20BUSINESS%20ANALYSIS&descAlignY=65" width="100%" />
-</p>
+# E-commerce Customer Churn | SQL Analysis Playbook
 
-<h1 align="center">E-commerce Customer Churn Analysis</h1>
+<div align="center">
 
-<p align="center">
-  <img src="https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
-  <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white" />
-  <img src="https://img.shields.io/badge/Data_Analysis-00A6A6?style=for-the-badge" />
-</p>
+**CUSTOMER RETENTION · BEHAVIOUR · DATA QUALITY**
 
-## 1. Project Overview
+MySQL · Relational Queries · Descriptive Analysis
 
-Customer churn is an important business challenge for e-commerce companies. Understanding customer behaviour can help businesses identify patterns associated with customer retention and churn.
+</div>
 
-This project uses SQL and MySQL to clean, transform, analyse and validate an e-commerce customer dataset.
+## Why this analysis?
 
-The analysis explores customer churn, complaints, satisfaction, order behaviour, payment preferences, cashback, returns and refunds.
+The project explores how customer churn is represented in a supplied e-commerce dataset. SQL is used to prepare the records, create analysis-ready fields, compare customer groups, and validate selected data-quality conditions.
 
-## 2. Business Problem
+## Dataset scoreboard
 
-An e-commerce business wants to understand customer churn and identify customer characteristics associated with churn.
-
-The project uses SQL queries to explore customer behaviour and compare active and churned customer groups.
-
-## 3. Project Objectives
-
-- Clean and prepare raw customer data for analysis.
-- Calculate customer counts and the overall churn rate.
-- Compare customer behaviour across churn groups.
-- Analyse complaints, satisfaction, orders and payment preferences.
-- Explore returns and refunds using SQL joins.
-- Apply advanced SQL techniques for customer segmentation.
-- Validate the cleaned data using data-quality checks.
-
-## 4. Dataset Overview
-
-The project uses a supplied e-commerce customer dataset.
-
-| Dataset measure | Result |
+| Measure | Result |
 |---|---:|
-| Source records | 5,630 |
-| Records after cleaning | 5,628 |
+| Source customer records | 5,630 |
+| Records retained after documented cleaning | 5,628 |
 | Active customers | 4,680 |
 | Churned customers | 948 |
-
-The dataset includes customer information such as tenure, order count, satisfaction score, preferred payment mode, complaints, cashback, returns and churn status.
-
-## 5. SQL Workflow
-
-The project is organised into two SQL files.
-
-### Step 1 — Database Setup and Data Preparation
-
-**File:** `Ecommerce_Customer_Churn_Analysis.sql`
-
-- Create the `ecomm` database if it does not already exist.
-- Drop and rebuild only the project's `customer_returns` and `customer_churn` tables.
-- Review and clean selected fields.
-- Handle missing values and inconsistent categories.
-- Prepare analysis-ready customer fields.
-
-**Execution safety:** The script is not read-only. Every full run replaces the two project tables named above, so any existing data stored in those tables will be lost. It does not drop the `ecomm` database or unrelated tables in that database. Back up any project-table data you need before running it.
-
-### Step 2 — Business Analysis
-
-**File:** `analysis/Business_Analysis_Queries.sql`
-
-Contains 30 SQL queries organised into:
-
-1. Core business KPIs
-2. Customer behaviour and experience
-3. Customer segmentation and advanced SQL
-4. Returns and refunds
-5. Data-quality validation
-6. Interview-level SQL skills
-
-## 6. Key Business Findings
-
-The following results are documented from the cleaned project dataset.
-
-| KPI | Result |
-|---|---:|
-| Total customers | 5,628 |
-| Active customers | 4,680 |
-| Churned customers | 948 |
-| Overall churn rate | 16.84% |
+| Churn rate | 16.84% |
+| Average tenure — active group | 11.09 |
+| Average tenure — churned group | 3.18 |
 | Churned customers who complained | 53.59% |
-| Average tenure — active customers | 11.09 |
-| Average tenure — churned customers | 3.18 |
 
-### Observations
+These values describe the cleaned project dataset only.
 
-- The cleaned dataset contains 5,628 customer records.
-- The calculated churn rate is 16.84%.
-- Churned customers have a lower average tenure than active customers in this dataset.
-- Complaints are present among a substantial share of churned customers.
+## Query workflow
 
-These are descriptive observations from the supplied dataset. They do not establish that complaints or tenure cause churn.
-
-## 7. Analysis Summary
-
-![E-commerce customer churn analysis summary](images/sql-analysis-summary.svg)
-
-*Static summary graphic based on the documented project results.*
-
-## 8. SQL Skills Demonstrated
-
-| Level | SQL techniques |
+| File | Role |
 |---|---|
-| Beginner | SELECT, WHERE, ORDER BY, DISTINCT |
-| Intermediate | GROUP BY, HAVING, CASE, aggregate functions |
-| Advanced | Joins, subqueries, conditional aggregation, window functions |
-| Data Quality | Duplicate checks, NULL checks, label validation, outlier checks |
+| [Main SQL workflow](Ecommerce_Customer_Churn_Analysis.sql) | Creates the project tables, prepares customer fields and creates the sample returns table |
+| [Business Analysis Queries](analysis/Business_Analysis_Queries.sql) | 30 queries across KPIs, behaviour, segmentation, returns/refunds and data-quality validation |
+| [Documentation index](docs/README.md) | Query sections, execution notes and limitations |
 
-## 9. Data Quality Validation
+### Analysis themes
 
-The project includes SQL checks for:
+**Customer status** — total customers, churned customers and churn-rate calculations.
 
-- Duplicate customer IDs.
-- Missing values in key analytical fields.
-- Two records with `WarehouseToHome` values above 100 were excluded as extreme observations for this project.
-- This is a project-specific cleaning decision and should be validated against business rules before real-world use.
-- Standardised churn and complaint labels.
-- Standardised payment modes.
-- Final cleaned customer record count.
+**Customer behaviour** — tenure, order count, satisfaction, cashback, payment preferences, coupons and complaints.
 
-## 10. Project Structure
+**Segmentation** — category and distance groups, conditional logic, ranking and subqueries.
 
-```text
-ecommerce-customer-churn-analysis/
-│
-├── Ecommerce_Customer_Churn_Analysis.sql
-│
-├── analysis/
-│   └── Business_Analysis_Queries.sql
-│
-├── images/
-│   └── sql-analysis-summary.svg
-│
-└── README.md
-```
+**Returns and refunds** — JOIN practice using the small illustrative returns table.
 
-## 11. How to Run the Project
+**Data quality** — duplicate, NULL, outlier and label checks.
 
-**Prerequisite:** MySQL Server and MySQL Workbench.
+## What stands out in this dataset?
 
-1. Clone or download this repository.
-2. Open `Ecommerce_Customer_Churn_Analysis.sql` in MySQL Workbench.
-3. Execute the main SQL workflow from the beginning.
-4. Confirm that the required tables have been created.
-5. Open `analysis/Business_Analysis_Queries.sql`.
-6. Execute the business analysis queries section by section.
-7. Review the results and data-quality validation outputs.
+- The cleaned data has a churn rate of 16.84%.
+- Average tenure is lower for the churned group (3.18) than for the active group (11.09).
+- 53.59% of churned customers are marked as having complained.
 
-**Important:** Run the main SQL file before running the business analysis file because the second file depends on the tables created by the first.
+These are associations observed in the supplied data. They do not prove that complaints or tenure cause churn.
 
-## 12. Scope and Limitations
+![SQL analysis summary](images/sql-analysis-summary.svg)
 
-- Results depend on the supplied project dataset and cleaning choices.
-- Distance bands and order-count segments are project-specific analytical rules.
-- The returns table contains only **8 illustrative records** created for SQL JOIN practice. They are not verified transactions or a representative sample of customer returns.
-- Return/refund query outputs describe those 8 illustrative records only; they must not be generalised to all 5,628 customer records or used to estimate a business return/refund rate.
-- The main SQL script drops and recreates the project's `customer_returns` and `customer_churn` tables on each full run. Back up anything important in those two tables first; other databases and unrelated tables are not dropped by this script.
-- Group comparisons are descriptive and do not establish cause and effect.
-- This is a SQL-based descriptive analysis, not a predictive machine-learning churn model.
-- The calculated churn rate should not be interpreted as a real company's current churn rate.
+<sub>Static summary graphic based on the documented project results.</sub>
 
-## 13. Author
+## Data preparation decisions
 
-**Shanmukh Koyya**
+The project documents missing-value handling and standardisation for the supplied fields. Two records with WarehouseToHome values above 100 were excluded as extreme observations for this exercise. That is a project-specific choice, not a universal business rule; it should be reviewed against domain context before real-world use.
 
-- **GitHub:** [shanmukhkoyya](https://github.com/shanmukhkoyya)
-- **LinkedIn:** [linkedin.com/in/shanmukh-koyya](https://www.linkedin.com/in/shanmukh-koyya/)
-- **Email:** [shanmukhkoyya1234@gmail.com](mailto:shanmukhkoyya1234@gmail.com)
+## Important: execution safety
+
+> [!CAUTION]
+> The main SQL file is not read-only. It creates the ecomm database if needed, then drops and rebuilds only the customer_returns and customer_churn project tables. Existing data in those two tables will be lost on a full rerun. The script does not drop the ecomm database or unrelated tables. Back up any project-table data you need before execution.
+
+## Returns table: sample data only
+
+The SQL workflow inserts **8 illustrative return/refund records** for JOIN practice. They are not verified business transactions and are not a representative sample of returns across all 5,628 customer records. Outputs from return-related queries must not be used to estimate a real business return rate or refund exposure.
+
+## Reproduce the work
+
+1. Use MySQL Server and MySQL Workbench or a compatible MySQL client.
+2. Read the execution-safety warning above.
+3. Run the main SQL workflow first in a disposable practice environment.
+4. Open the business analysis file and execute queries section by section.
+5. Review result sets and the final data-quality queries.
+
+## Skills demonstrated
+
+SELECT · WHERE · GROUP BY · HAVING · CASE · aggregate functions · joins · subqueries · conditional aggregation · window functions · NULL/duplicate checks
+
+## Project boundaries
+
+This is descriptive SQL analysis, not a predictive machine-learning churn model. Segments use project-defined rules, findings refer only to the supplied data, and group comparisons do not establish cause and effect.
+
+---
+
+**Shanmukh Koyya** · [GitHub](https://github.com/shanmukhkoyya) · [LinkedIn](https://www.linkedin.com/in/shanmukh-koyya/) · [Email](mailto:shanmukhkoyya1234@gmail.com)
