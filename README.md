@@ -1,63 +1,39 @@
-<p align="center"><img src="assets/readme-hero.svg" width="100%" alt="Customer churn SQL analysis"/></p>
-
 <div align="center">
-
-# THE RETENTION INVESTIGATION
-### E-commerce customer churn · MySQL
-
-<img src="https://img.shields.io/badge/SQL-MYSQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/>
-<img src="https://img.shields.io/badge/CLEANED%20ROWS-5%2C628-176B72?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/CHURN-16.84%25-9B3A3A?style=for-the-badge"/>
-
+<img src="assets/readme-hero.svg" width="100%" alt="Customer retention analysis"/>
+<h1>RETENTION CONTROL ROOM</h1>
+<p>MYSQL · E-COMMERCE CUSTOMER CHURN</p>
 </div>
 
-## At a glance
+## Dataset pulse
+<table><tr><td align="center"><h1>5,628</h1><sub>cleaned customers</sub></td><td align="center"><h1>4,680</h1><sub>active</sub></td><td align="center"><h1>948</h1><sub>churned</sub></td><td align="center"><h1>16.84%</h1><sub>churn rate</sub></td></tr></table>
 
-| <div align="center">5,628</div> | <div align="center">4,680</div> | <div align="center">948</div> | <div align="center">16.84%</div> |
-|:---:|:---:|:---:|:---:|
-| Cleaned customers | Active | Churned | Churn rate |
-
-## The investigation path
-
+## Investigation pipeline
 ```mermaid
 flowchart TD
- A[(Customer CSV)] --> B[Inspect & clean]
- B --> C[(MySQL project tables)]
- C --> D[Build churn KPIs]
- D --> E[Compare tenure & complaints]
- E --> F[Segment customers]
- F --> G[Run quality checks]
+ A[Customer source] --> B[Quality review]
+ B --> C[MySQL tables]
+ C --> D[Status and churn KPIs]
+ D --> E[Tenure / complaint comparison]
+ E --> F[Segments and checks]
 ```
 
-## What the analysis surfaced
-
-| Signal | Active customers | Churned customers |
+## Signal board
+| Observed pattern | Active | Churned |
 |---|---:|---:|
 | Average tenure | 11.09 | 3.18 |
 
-**53.59%** of churned customers had the complaint flag set in this dataset. This is an association, not proof of cause.
+**Complaint flag:** 53.59% of churned customers had the flag set in this dataset. This is an association, not evidence that complaints caused churn.
 
-## Choose a workbench
+## Open the SQL workbench
+- [Main SQL setup](Ecommerce_Customer_Churn_Analysis.sql)
+- [Analysis queries](analysis/Business_Analysis_Queries.sql)
+- [Documentation index](docs/README.md)
 
-<table>
-<tr><th>START HERE</th><th>GO DEEPER</th><th>READ THE METHOD</th></tr>
-<tr><td><a href="Ecommerce_Customer_Churn_Analysis.sql">Main SQL script ↗</a><br/><sub>Database and table setup</sub></td><td><a href="analysis/Business_Analysis_Queries.sql">Analysis queries ↗</a><br/><sub>KPIs, segments and checks</sub></td><td><a href="docs/README.md">Documentation index ↗</a><br/><sub>Query-by-query guide</sub></td></tr>
-</table>
-
-<details><summary><strong>Investigation modules</strong></summary>
-
-1. Customer status and churn-rate calculation
-2. Tenure and complaint-flag comparison
-3. Customer and category segmentation
-4. JOIN practice using return examples
-5. Duplicate, NULL and outlier checks
-
-</details>
-
+## Safety & interpretation
 > [!CAUTION]
-> The main script drops and recreates only `customer_returns` and `customer_churn`. It does not drop the `ecomm` database or unrelated tables. Back up these project tables and use a practice database.
+> The main script drops and recreates only `customer_returns` and `customer_churn`. It does not drop the `ecomm` database or unrelated tables. Back up the two project tables and use a practice database.
 
 > [!NOTE]
-> Eight inserted return/refund rows are illustrative JOIN examples, not verified transactions. Do not use them to calculate a real return rate. WarehouseToHome values 126 and 127 were excluded as extreme observations for this exercise; validate thresholds with business context.
+> Eight return/refund rows are illustrative JOIN examples, not verified transactions. Do not calculate a real return rate from them. WarehouseToHome values 126 and 127 were excluded as extreme observations for this exercise.
 
-**Scope boundary:** This is descriptive analysis, not a predictive model. It does not prove that tenure or complaints cause churn.
+**Boundary:** descriptive SQL analysis only; not a predictive model and not proof of cause.
