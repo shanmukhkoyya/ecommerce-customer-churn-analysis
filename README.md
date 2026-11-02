@@ -118,7 +118,8 @@ The project includes SQL checks for:
 
 - Duplicate customer IDs.
 - Missing values in key analytical fields.
-- Remaining distance outliers.
+- Two records with `WarehouseToHome` values above 100 were excluded as extreme observations for this project.
+- This is a project-specific cleaning decision and should be validated against business rules before real-world use.
 - Standardised churn and complaint labels.
 - Standardised payment modes.
 - Final cleaned customer record count.
